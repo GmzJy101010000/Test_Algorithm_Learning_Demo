@@ -28,26 +28,26 @@ public class SsgaInterView {
 			ml = s.next();
 
 			if (ml.equals("1")) {
-				du.show(du.duru());
+				EmployeeUtils.show(EmployeeUtils.duru());
 			}
 			if (ml.equals("2")) {
 				b = false;
 				System.out.println("请输入员工姓名：");
 				String a1 = null;
 				a1 = s.next();
-				du.findbyname(du.duru(), a1);
+				EmployeeUtils.findbyname(EmployeeUtils.duru(), a1);
 				b = true;
 
 			}
 
 			if (ml.equals("3")) {
-				du.showjibie();
+				EmployeeUtils.showjibie();
 			}
 			if (ml.equals("8")) {
 
-				List<em> bossList = du.boss(du.duru());
-				for (em e : bossList) {
-					du.diGuiShowEmployee(e);
+				List<Employee> bossList = EmployeeUtils.boss(EmployeeUtils.duru());
+				for (Employee e : bossList) {
+					EmployeeUtils.diGuiShowEmployee(e);
 				}
 
 			}
@@ -60,21 +60,21 @@ public class SsgaInterView {
 	}
 }
 
-class du {
+class EmployeeUtils {
 
 	private static String head = "";
 	private static String increse = "   ";
 
-	public static java.util.List<em> duru() throws IOException {
-		java.util.List<em> li = null;
+	public static java.util.List<Employee> duru() throws IOException {
+		java.util.List<Employee> li = null;
 		BufferedReader b = null;
 		try {
 			String dizhi = "C:/share/data.txt";
 			 b = new BufferedReader(new FileReader(dizhi));
 			String s = b.readLine();
-			li = new ArrayList<em>();
+			li = new ArrayList<Employee>();
 			while (s != null) {
-				em em = new em();
+				Employee em = new Employee();
 				String[] strs = s.split(",");
 				em.setId(strs[0].trim());
 				em.setName(strs[1].trim());
@@ -100,19 +100,19 @@ class du {
 		return li;
 	}
 
-	public static void show(java.util.List<em> li) {
+	public static void show(java.util.List<Employee> li) {
 		for (int a = 0; a < li.size(); a++) {
-			em e1 = li.get(a);
+			Employee e1 = li.get(a);
 			System.out.println(e1);
 
 		}
 	}
 	
 	@SuppressWarnings("unused")
-	public static void findbyname(java.util.List<em> li, String aa) {
-		em e1 = findone(li, aa);
-		java.util.List<em> e2 = findtop(li, aa);
-		java.util.List<em> e3 = findxia(li, aa);
+	public static void findbyname(java.util.List<Employee> li, String aa) {
+		Employee e1 = findone(li, aa);
+		java.util.List<Employee> e2 = findtop(li, aa);
+		java.util.List<Employee> e3 = findxia(li, aa);
 		String shangji = null;
 		;
 		
@@ -145,8 +145,8 @@ class du {
 
 	}
 
-	public static em findone(java.util.List<em> li, String aa) {
-		em e = null;
+	public static Employee findone(java.util.List<Employee> li, String aa) {
+		Employee e = null;
 		for (int a = 0; a < li.size(); a++) {
 			if (aa.equals(li.get(a).getName())) {
 				e = li.get(a);
@@ -158,9 +158,9 @@ class du {
 
 	}
 
-	public static java.util.List<em> findtop(java.util.List<em> li, String aa) {
-		em e = findone(li, aa);
-		java.util.List<em> eList = new ArrayList<em>();
+	public static java.util.List<Employee> findtop(java.util.List<Employee> li, String aa) {
+		Employee e = findone(li, aa);
+		java.util.List<Employee> eList = new ArrayList<Employee>();
 		if (e == null) {
 			// System.out.println("该员工不存在");
 			return eList;
@@ -176,9 +176,9 @@ class du {
 
 	}
 
-	public static java.util.List<em> findxia(java.util.List<em> li, String aa) {
-		em e = findone(li, aa);
-		java.util.List<em> eList = new ArrayList<em>();
+	public static java.util.List<Employee> findxia(java.util.List<Employee> li, String aa) {
+		Employee e = findone(li, aa);
+		java.util.List<Employee> eList = new ArrayList<Employee>();
 		if (e == null) {
 			// System.out.println("该员工不存在");
 			return eList;
@@ -194,9 +194,9 @@ class du {
 
 	}
 
-	public static java.util.List<em> boss(java.util.List<em> li) {
-		em e = null;
-		java.util.List<em> bosslist = new ArrayList<em>();
+	public static java.util.List<Employee> boss(java.util.List<Employee> li) {
+		Employee e = null;
+		java.util.List<Employee> bosslist = new ArrayList<Employee>();
 		for (int a = 0; a < li.size(); a++) {
 			if (li.get(a).getLeader().equals("null")) {
 				e = li.get(a);
@@ -209,24 +209,24 @@ class du {
 
 	// 显示层级信息
 	public static void showjibie() throws IOException {
-		java.util.List<em> boss = boss(duru());
+		java.util.List<Employee> boss = boss(duru());
 		for (int b = 0; b < boss.size(); b++) {
-			em e1 = boss.get(b);
-			java.util.List<em> erji = findxia(duru(), e1.getName());
+			Employee e1 = boss.get(b);
+			java.util.List<Employee> erji = findxia(duru(), e1.getName());
 			System.out.println(e1.getName());
 			for (int a = 0; a < erji.size(); a++) {
 				System.out.println("    " + erji.get(a).getName());
-				em e2 = erji.get(a);
-				java.util.List<em> sanji = findxia(duru(), e2.getName());
+				Employee e2 = erji.get(a);
+				java.util.List<Employee> sanji = findxia(duru(), e2.getName());
 				for (int c = 0; c < sanji.size(); c++) {
 					System.out.println("        "
 							+ sanji.get(c).getName());
-					em e3 = sanji.get(c);
-					java.util.List<em> siji = findxia(duru(), e3.getName());
+					Employee e3 = sanji.get(c);
+					java.util.List<Employee> siji = findxia(duru(), e3.getName());
 					for (int d = 0; d < siji.size(); d++) {
 						System.out.println("           "
 								+ siji.get(d).getName());
-						java.util.List<em> wuji = findxia(duru(),
+						java.util.List<Employee> wuji = findxia(duru(),
 								siji.get(d).getName());
 						for (int f = 0; f < wuji.size(); f++) {
 							System.out.println("             "
@@ -240,12 +240,12 @@ class du {
 
 	}
 
-	public static void diGuiShowEmployee(em employee) throws IOException {
+	public static void diGuiShowEmployee(Employee employee) throws IOException {
 
 		System.out.println(head + employee.getId());
 
 		head += increse;
-		List<em> employeeList = findxia(duru(), employee.getName());
+		List<Employee> employeeList = findxia(duru(), employee.getName());
 
 		if (employeeList.size() > 0) {
 
@@ -261,7 +261,7 @@ class du {
 
 }
 
-class em {
+class Employee {
 
 	private String id;
 	private String name;
